@@ -1,1 +1,1 @@
-"Django web uygulamasç" 
+"Django web uygulamasi" 
