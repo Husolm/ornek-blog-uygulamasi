@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1">{{article.title}}</h1>
+                            <hr>
+                            <!-- Post meta content-->
+                            <div class="text-muted fst-italic mb-2">{{article.created_date}} tarihinde {{article.author.username}} tarafından yayınlandı.</div>
+                            <hr>
+                            <!-- Post categories-->
+                        </header>
+                        <!-- Preview image figure-->
+                        {% if article.article_images %}
+                        <figure class="mb-4"><img class="img-fluid rounded" src="{{article.article_images.url}}" alt="..." /></figure>
+                        {% endif %}
+                       
+                        <!-- Post content-->
+                        <section class="mb-5">
+                            <p>
+                            {{article.content|safe}}
+                            <hr>
+                            </p>
+                        </section>
+                    </article>
+                    <section class="mb-5">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <!-- Comment form-->
+                                <div style="margin-bottom:50px">                              
+                                <form class="mb-4" method="post" action="/articles/comment/{{article.id}}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">İsim</label>
+                                    <input name="comment_author" type="text" class="form-control" id="formGroupExampleInput" placeholder="İsminizi girin"></div>                                
+                                <label for="formGroupExampleInput">Yorum</label>
+                                <textarea name="comment_content"class="form-control" rows="3" placeholder="Yorum ekle!"></textarea>                                
+                                <button type="submit" class="btn btn-success" style="float:right">Ekle</button>
+                                </form>
+                                </div>
+                                
+                                    {% if comments %}
+                                    {% for comment in comments %}
+                                    <div class="flex-shrink-0">
+                                    <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                    <div class="ms-3" >                                       
+                                        <div class="fw-bold">{{comment.comment_author}}</div>
+                                        {{comment.comment_content}}
+                                    </div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <div class="alert alert-danger">Bu makaleye henüz yorum yapılmamış. İlk yorum yapan siz olun.</div>
+                                    {% endif %}
+
+                            </div>
+                        </div>
+                    </section>
+                </div>    
+            </div>
+         </div>
+    </div>
+</div>
+    
+{% endblock body %}
